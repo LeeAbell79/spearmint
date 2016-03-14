@@ -1,4 +1,4 @@
-var tmsp = require("../index")
+var tmsp = require("../lib/index")
 
 //We are going to create a dummy app
 

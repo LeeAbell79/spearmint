@@ -10,7 +10,7 @@
     "protobufjs": "^5.0.1"
   },
   "directories": {
-    "example": "example",
+    "example": "examples",
     "lib": "lib"
   },
   "devDependencies": {},
