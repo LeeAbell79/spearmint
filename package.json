@@ -1,5 +1,5 @@
 {
-  "name": "spearmint",
+  "name": "spear-mint",
   "version": "0.0.1",
   "description": "Express/Restify inspired framework for building TMSP blockchain apps",
   "main": "./lib/index.js",
@@ -27,7 +27,7 @@
     "App-builder"
   ],
   "author": "Dennis Mckinnon",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dennismckinnon/spearmint/issues"
   },
