@@ -1,8 +1,10 @@
-var tmsp = require("../lib/index")
+var app = require("../lib/index");
+var util = require('util');
+var types = app.types;
 
 //We are going to create a dummy app
 
-counterApp = tmsp.createApp()
+counterApp = app.createApp()
 
 var hashCount = 0;
 var txCount = 0;
@@ -11,18 +13,20 @@ var serial = false;
 //This is a simple "middleware" example which is going to get attached to all route
 
 counterApp.use(function(req, res, next){
+	console.log("\n\n================================================")
 	console.log("A new Request has come in! Its method is: " + req.method)
 	next()
+
 })
+
+//Re-add the defaults so that the middle ware gets used on them
+counterApp.addDefaultHandlers();
 
 counterApp.info(function(req, res, next){
 	res.send({data: util.format("hashes:%d, txs:%d", hashCount, txCount)})
 })
 
 counterApp.setoption(function(req, res, next){
-	console.log("setoption")
-	console.log([req.key, req.value])
-	console.log(serial)
 	if (req.key == 'serial'){
 		if (req.value == 'on'){
 			serial = true;
@@ -36,7 +40,6 @@ counterApp.setoption(function(req, res, next){
 	} else {
 		res.send({log: "Unexpected key"})
 	}
-	console.log(serial)
 	next()
 })
 
@@ -50,11 +53,11 @@ counterApp.appendtx(function(req, res, next){
 		}	
 		var txValue = txBytes.readUIntBE(0, txBytes.length);
 		if (txValue != txCount){
-			res.send({code:tmsp.CodeType.BadNonce, log:"Nonce is invalid. Got "+txValue+", expected "+txCount});
+			res.send({code:types.CodeType.BadNonce, log:"Nonce is invalid. Got "+txValue+", expected "+txCount});
 		}
 	}
 	txCount += 1;
-	res.send({code:tmsp.CodeType_OK});
+	res.send({code:types.CodeType_OK});
 })
 
 counterApp.checktx(function(req, res, next){
@@ -67,11 +70,10 @@ counterApp.checktx(function(req, res, next){
 		}	
 		var txValue = txBytes.readUIntBE(0, txBytes.length);
 		if (txValue < txCount){
-			return cb({code:tmsp.CodeType.BadNonce, log:"Nonce is too low. Got "+txValue+", expected >= "+txCount});
+			res.send({code:types.CodeType.BadNonce, log:"Nonce is too low. Got "+txValue+", expected >= "+txCount});
 		}
 	}
-	txCount += 1;
-	res.send({code:tmsp.CodeType_OK});
+	res.send({code:types.CodeType_OK});
 })
 
 counterApp.commit(function(req, res, next){
