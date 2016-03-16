@@ -4,7 +4,7 @@ var types = app.types;
 
 //We are going to create a dummy app
 
-counterApp = app.createApp()
+counterApp = app.createApp();
 
 var hashCount = 0;
 var txCount = 0;
