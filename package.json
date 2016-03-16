@@ -1,11 +1,11 @@
 {
   "name": "spear-mint",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Express/Restify inspired framework for building TMSP blockchain apps",
   "main": "./lib/index.js",
   "dependencies": {
     "assert-plus": "^1.0.0",
-    "tmsp-server": "0.0.3"
+    "tmsp-server": "0.0.5"
   },
   "directories": {
     "example": "examples",
